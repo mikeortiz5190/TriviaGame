@@ -13,6 +13,7 @@
 
     var intervalId;
 
+/*
     answers = {
       an1: "1969",
       an2: "Nitrogen",
@@ -54,7 +55,7 @@
       respE2:"Theodore Roosavelt",
       respE3:"Alexander Graham Bell",
       respE4:"Thomas Edison"
-    }
+    }*/
 
     //Turn each question div into a variable
 
@@ -70,7 +71,7 @@
 
     //Place them into an array
 
-    var questions = [questOne, questTwo, questThree, questFour, questFive];
+    var question = [questOne, questTwo, questThree, questFour, questFive];
 
     //Hides all the questions in the HTML
     window.onload = function(){
@@ -83,17 +84,27 @@
   };
   
   //Click the button to start the game and call QuizMe
+
+  //The function will take turns showing and hiding each question div to the user. the user clicks on a response and has only 10
+  //seconds to respond. once time expires, the code will return whether the user got the answer correct or not. then after 3 seconds, 
+  //the code will loop again to the next question and repeat until all questions have been ran through the code.
+
+
   function startGame(){
     $("#start").hide();
-    
-    questions[0].show();
     QuizMe();
 
   }
 
-    //decrement/start function
+function QuizMe() {
 
-    function QuizMe() {
+  for(i = 0; i < question.length; i++){
+
+    question[i].show();
+    //question[i-1].hide();
+
+    //decrement/start function
+    function Timer() {
       intervalId = setInterval(decrement, 1000);
  
     }
@@ -109,7 +120,6 @@
         checkOne();
 
         setTimout(function(){
-          standby()
         }, 5000);
         
         return false;
@@ -131,13 +141,14 @@
       wrong++
       }
     }
+  }
+  console.log(correct);
+  console.log(wrong);
+}
 
-    function standby() {
-      $(".interchange1").hide();
-      $(".interchange2").show();
-      QuizMe();
-    }
-
+//P.S, the code worked when I ran just one question without a for loop. When I started to incorporate
+//the for loop for multiple questions, things didn't work as planned by the time this was turned in :(
+  //I know we were told to use objects but I belive this method was more efficient, If I got it to work of course lol.
     
 
     });
