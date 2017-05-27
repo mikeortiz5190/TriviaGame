@@ -5,10 +5,12 @@
     $( document ).ready(function(){
     //  Interval Demonstration
     //  Set our number counter to 100.
-    var number =15;
+    var number = 3;
 
-    //  Variable that will hold our interval ID when we execute
-    //  the "run" function
+    var correct = 0;
+
+    var wrong = 0;
+
     var intervalId;
 
     answers = {
@@ -54,21 +56,49 @@
       respE4:"Thomas Edison"
     }
 
-    //  
+    //Turn each question div into a variable
+
+    var questOne = $(".interchange1");
+
+    var questTwo = $(".interchange2");
+    
+    var questThree = $(".interchange3");
+
+    var questFour = $(".interchange4");
+
+    var questFive = $(".interchange5");
+
+    //Place them into an array
+
+    var questions = [questOne, questTwo, questThree, questFour, questFive];
+
+    //Hides all the questions in the HTML
     window.onload = function(){
-    $(".interchange1").hide();  
     $("#start").on("click", startGame);
-    };
+    $(".interchange1").hide();  
+    $(".interchange2").hide();
+    $(".interchange3").hide();
+    $(".interchange4").hide();
+    $(".interchange5").hide();
+  };
+  
+  //Click the button to start the game and call QuizMe
+  function startGame(){
+    $("#start").hide();
+    
+    questions[0].show();
+    QuizMe();
+
+  }
 
     //decrement/start function
 
-    function startGame() {
+    function QuizMe() {
       intervalId = setInterval(decrement, 1000);
-      $("#start").hide();
-      $(".interchange1").show();
+ 
     }
 
-    //  The decrement function.
+    //decrement function.
     function decrement() {
       number--;
       $(".timer").html("<h2> Time Remaining " + number + "</h2>");
@@ -76,24 +106,38 @@
 
         stop();
 
-        check();
+        checkOne();
 
-        //  
+        setTimout(function(){
+          standby()
+        }, 5000);
         
         return false;
       }
     }
 
-    //  The stop function
+    //stop function
     function stop() {
       clearInterval(intervalId);
-      $(".switch").html($("<h4>").html("YOUR WRONG!"));
     }
 
-    function check() {
+    function checkOne() {
       if ($("input:checked").val() === "true"){
-        alert("YOUR RIGHT!!!");
+      $(".switchOne").html($("<h4>").html("YOUR CORRECT!"));
+      correct++;
+      }
+      else {
+      $(".switchOne").html($("<h4>").html("YOUR WRONG!"));
+      wrong++
       }
     }
+
+    function standby() {
+      $(".interchange1").hide();
+      $(".interchange2").show();
+      QuizMe();
+    }
+
+    
 
     });
